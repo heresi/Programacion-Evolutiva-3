@@ -16,6 +16,9 @@ public class Arbol implements Iterable<Arbol>{
 	private boolean _esHi;
 	private int _posSimbolo;
 	
+        public String get_valor(){
+            return _valor;
+        }
 	//constructor vacio inicial
 	public Arbol() {
 		_hi = null;
@@ -44,6 +47,24 @@ public class Arbol implements Iterable<Arbol>{
 		_posSimbolo = -1;
 	}
 	
+        /**
+         * por copia
+         * @param a - arbol a copiar
+         * @param padre - el padre, llamar con null, en la llamada inicial
+         */
+        public Arbol(Arbol a, Arbol padre){
+            this._esHi = a._esHi;
+            this._esHoja = a._esHoja;
+            this._esRaiz = a._esRaiz;            
+            this._numNodos = a._numNodos;
+            this._padre = padre;
+            this._posSimbolo = a._posSimbolo;
+            this._profundidad = a._profundidad;
+            this._valor = a._valor;
+            this._hd = a._hd==null?null:new Arbol(a._hd,this);
+            this._hi = a._hi==null?null:new Arbol(a._hi,this);
+            
+        }
 	//genera aleatorio
 	public void aleatorioCompleta(int prof) {
 		Random r = new Random();

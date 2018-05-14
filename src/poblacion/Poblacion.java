@@ -32,14 +32,20 @@ public class Poblacion {
 		_mejores = new Cromosoma[_num_mejores];
 		_puntuacion = new double[_tam];
 		_punt_acum = new double[_tam];
-		_completa = ini.equals("COMPLETA");
+		_completa = ini.equalsIgnoreCase("COMPLETA");
 		double punt = 0;
 		double apt;
 		int indice_mejores = 0;
 		int altura = hMax;
 		//generar poblaciones
 		for(int i = 0; i < _tam;i++) {
-			if(ini.equals("R&H")) {
+			if(ini.equalsIgnoreCase("R&H")) {
+                            if(i!=0 && 0==i%(_tam/hMax)){
+                                altura--;
+                            }
+                            if(i!=0 && 0==i%((_tam/hMax)/2)){
+                                _completa = !_completa;
+                            }
 				//a completar
 			}
 			_pob[i] = FactoriaCromosoma.getCromosoma(_mut, altura, _completa);
