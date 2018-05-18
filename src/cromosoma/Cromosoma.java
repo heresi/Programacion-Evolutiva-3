@@ -10,7 +10,8 @@ public abstract class Cromosoma {
 	protected int _hMaxima;
 	protected String _fenotipo;
 	protected String _tipoCrom;
-	
+	protected boolean _completa;
+        
 	public Cromosoma(int hMaxima, boolean completa) {
 		_hMaxima = hMaxima;
 		_arbol = new Arbol();
@@ -28,37 +29,70 @@ public abstract class Cromosoma {
 		this._hMaxima = c._hMaxima;
 		this._tipoCrom = c._tipoCrom;
 	}
-	
+	public void print(){
+            _arbol.print(0);
+        }
+        public void cruce (Cromosoma c){
+            _arbol = _arbol.cruce(c._arbol);
+        }
+        
 	public double aptitud() {
-            _aptitud = 0.0;
-            StringTokenizer st = new StringTokenizer(_fenotipo);
-            _aptitud = Double.parseDouble(st.nextToken());//presupongo que A o B son numeros, cambiarlo
-            
-            while(st.hasMoreTokens()){
-                String token = st.nextToken();
-                if (token.equalsIgnoreCase("+"))
-                    _aptitud += Double.parseDouble(st.nextToken());
-                if (token.equalsIgnoreCase("-"))
-                    _aptitud -= Double.parseDouble(st.nextToken());
-                if (token.equalsIgnoreCase("+"))
-                    _aptitud *= Double.parseDouble(st.nextToken());
-                if (token.equalsIgnoreCase("-"))
-                    _aptitud /= Double.parseDouble(st.nextToken());
-                if (token.equalsIgnoreCase("sqrt"))
-                    _aptitud = Math.sqrt(_aptitud);
-                if (token.equalsIgnoreCase("log"))
-                    _aptitud = Math.log(_aptitud);//base e? o cambiar a base 10?
-            }
+            _aptitud = aptitud(_arbol);
             return _aptitud;
 	}
-        
-	public void fenotipo() {
-            _fenotipo = "";
-            Iterator<Arbol> it = _arbol.iterator();
-            while(it.hasNext()){
-                _fenotipo += it.next().get_valor()+ " ";
-            }
+        private double aptitud(Arbol a){
+            double aux = 0.0;
+            if (a.get_valor().equalsIgnoreCase("log"))
+                aux = Math.log(aptitud(a.get_hijo(true))); 
+            if (a.get_valor().equalsIgnoreCase("sqrt"))
+                aux = Math.sqrt(aptitud(a.get_hijo(true)));
+            if (a.get_valor().equalsIgnoreCase("+"))
+                aux=aptitud(a.get_hijo(true))+aptitud(a.get_hijo(false));
+            if (a.get_valor().equalsIgnoreCase("-"))
+                aux=aptitud(a.get_hijo(true))-aptitud(a.get_hijo(false));
+            if (a.get_valor().equalsIgnoreCase("*"))
+                aux=aptitud(a.get_hijo(true))*aptitud(a.get_hijo(false));
+            if (a.get_valor().equalsIgnoreCase("/"))
+                aux=aptitud(a.get_hijo(true))/aptitud(a.get_hijo(false));
+            if (a.get_valor().equalsIgnoreCase("A"))
+                aux = 5;
+            if (a.get_valor().equalsIgnoreCase("B"))
+                aux = 5;
+                
+                
+                
+                return aux;
             
+        }
+        
+        
+        
+        public String fenotipo() {
+            _fenotipo = fenotipo(_arbol);
+            return _fenotipo;
+        }
+	private String fenotipo(Arbol a) {
+            String aux = "";
+            if(a.get_valor().equalsIgnoreCase("log")){
+                aux = "log( ";
+                aux += a.get_hijo(true)!=null?fenotipo(a.get_hijo(true)):"";
+                aux += ") ";
+                return aux;
+            }
+                
+            
+            if (a.get_valor().equalsIgnoreCase("sqrt")){
+                aux = "sqrt( ";
+                aux += a.get_hijo(true)!=null?fenotipo(a.get_hijo(true)):"";
+                aux += ") ";
+                return aux;
+            }
+
+            aux += a.get_hijo(true)!=null?fenotipo(a.get_hijo(true)):"";
+            aux += a.get_valor() + " ";
+            aux += a.get_hijo(false)!=null?fenotipo(a.get_hijo(false)):"";
+            
+            return aux;
 	}
 	
 	public abstract boolean mutacion(double prob);
