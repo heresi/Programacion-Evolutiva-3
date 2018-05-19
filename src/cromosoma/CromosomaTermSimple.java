@@ -3,14 +3,16 @@ package cromosoma;
 import java.util.Iterator;
 import java.util.Random;
 
+import datos.ConjuntoCasos;
+
 /**
  * cromosma con mutacion por terminal simple
  * @author Carlos
  */
 public class CromosomaTermSimple extends Cromosoma{
 
-	public CromosomaTermSimple(int hMaxima, boolean completa) {
-		super(hMaxima, completa);
+	public CromosomaTermSimple(ConjuntoCasos casos, int hMaxima, boolean completa) {
+		super(casos, hMaxima, completa);
 		_tipoCrom = "TERM_SIMPLE";
 	}
 

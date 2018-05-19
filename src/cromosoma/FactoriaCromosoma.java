@@ -1,20 +1,21 @@
 package cromosoma;
 
+import datos.ConjuntoCasos;
+
 public class FactoriaCromosoma {
         
-	public static Cromosoma getCromosoma(String mutacion,int _hMax, boolean iniCompleta) {
+	public static Cromosoma getCromosoma(String mutacion,int _hMax, boolean iniCompleta, boolean creciente, ConjuntoCasos casos) {
 		switch(mutacion) {
 		case("TERM_SIMPLE"):
-			return new CromosomaTermSimple(_hMax, iniCompleta);
+			return new CromosomaTermSimple(casos, _hMax, iniCompleta);
 		case("FUN_SIMPLE"):
-			return new CromosomaFunSimple(_hMax, iniCompleta);// se queja por que modifique este en concreto por que necesitaba saber si el arbol se construia completo o no, 
-                        //modifica el cromosoma o esta funcion segun creas
+			return new CromosomaFunSimple(casos, _hMax, iniCompleta, creciente);
 		case("ARBOL"):
-			return new CromosomaArbol(_hMax, iniCompleta);
+			return new CromosomaArbol(casos, _hMax, iniCompleta);
         case("PERMUTACION"):
-            return new CromosomaPermutacion(_hMax, iniCompleta);
+            return new CromosomaPermutacion(casos,_hMax, iniCompleta);
 		default:
-			return new CromosomaTermSimple(_hMax, iniCompleta);
+			return new CromosomaTermSimple(casos, _hMax, iniCompleta);
 		}
 	}
 	public static Cromosoma getCromosomaCopia(Cromosoma c) {

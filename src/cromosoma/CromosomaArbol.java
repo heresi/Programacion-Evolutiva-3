@@ -3,6 +3,8 @@ package cromosoma;
 import java.util.Iterator;
 import java.util.Random;
 
+import datos.ConjuntoCasos;
+
 /**
  * cromosoma por mutacion de recrear un sub arbol
  * @author Carlos
@@ -11,8 +13,8 @@ public class CromosomaArbol extends Cromosoma{
 	
 	
 	
-	public CromosomaArbol(int hMaxima, boolean completa) {
-		super(hMaxima, completa);
+	public CromosomaArbol(ConjuntoCasos casos, int hMaxima, boolean completa) {
+		super(casos, hMaxima, completa);
 		this._tipoCrom = "ARBOL";
 	}
 

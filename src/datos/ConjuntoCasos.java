@@ -5,6 +5,7 @@ public class ConjuntoCasos {
 	private int _num_casos;
 	
 	public ConjuntoCasos() {
+		_casos = new Caso[6];
 		_num_casos = 6;
 		_casos[0] = new Caso(0.72,0.61);
 		_casos[1] = new Caso(1.00,1.00);

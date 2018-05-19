@@ -48,7 +48,7 @@ public abstract class Poblacion {
                             }
 				//a completar
 			}
-			_pob[i] = FactoriaCromosoma.getCromosoma(_mut, altura, _completa, _creciente);
+			_pob[i] = FactoriaCromosoma.getCromosoma(_mut, altura, _completa, _creciente,_prueba);
 			apt = _pob[i].aptitud();
 			if(apt > punt || i < _num_mejores) {
 				_mejores[indice_mejores] = FactoriaCromosoma.getCromosomaCopia(_pob[i]);

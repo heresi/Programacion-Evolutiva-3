@@ -3,6 +3,8 @@ package cromosoma;
 import java.util.Iterator;
 import java.util.Random;
 
+import datos.ConjuntoCasos;
+
 /**
  * cromosoma por funcion ssimple
  * @author Carlos
@@ -10,10 +12,10 @@ import java.util.Random;
 public class CromosomaFunSimple extends Cromosoma{
 
         
-	public CromosomaFunSimple(int hMaxima, boolean completa, boolean cre) {
-		super(hMaxima, completa);
+	public CromosomaFunSimple(ConjuntoCasos casos, int hMaxima, boolean completa, boolean cre) {
+		super(casos, hMaxima, completa);
 		this._tipoCrom = "FUN_SIMPLE";
-                this._completa = cre;//
+        this._completa = cre;//
 	}
 	
 	public CromosomaFunSimple(Cromosoma c) {

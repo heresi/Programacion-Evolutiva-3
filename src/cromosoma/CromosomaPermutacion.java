@@ -3,14 +3,16 @@ package cromosoma;
 import java.util.Iterator;
 import java.util.Random;
 
+import datos.ConjuntoCasos;
+
 /**
  * cromosoma con mutacion por permutacion
  * @author Carlos
  */
 public class CromosomaPermutacion extends Cromosoma{
 
-	public CromosomaPermutacion(int hMaxima, boolean completa) {
-		super(hMaxima, completa);
+	public CromosomaPermutacion(ConjuntoCasos casos, int hMaxima, boolean completa) {
+		super(casos, hMaxima, completa);
 	}
 
 	public CromosomaPermutacion(Cromosoma c) {

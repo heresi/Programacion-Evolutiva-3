@@ -3,6 +3,8 @@ package cromosoma;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import datos.ConjuntoCasos;
+
 
 public abstract class Cromosoma {
 	protected double _aptitud;
@@ -11,9 +13,11 @@ public abstract class Cromosoma {
 	protected String _fenotipo;
 	protected String _tipoCrom;
 	protected boolean _completa;
+	protected ConjuntoCasos _casos;
         
-	public Cromosoma(int hMaxima, boolean completa) {
+	public Cromosoma(ConjuntoCasos casos, int hMaxima, boolean completa) {
 		_hMaxima = hMaxima;
+		_casos = casos;
 		_arbol = new Arbol();
 		if(completa)
 			_arbol.aleatorioCompleta(_hMaxima);
@@ -25,6 +29,7 @@ public abstract class Cromosoma {
                 this._arbol = new Arbol(c._arbol,null);
 		//copia de arbol
 		this._aptitud = c._aptitud;
+		this._casos = c._casos;
 		this._fenotipo = c._fenotipo;
 		this._hMaxima = c._hMaxima;
 		this._tipoCrom = c._tipoCrom;
@@ -32,36 +37,37 @@ public abstract class Cromosoma {
 	public void print(){
             _arbol.print(0);
         }
-        public void cruce (Cromosoma c){
+    public void cruce (Cromosoma c){
             _arbol = _arbol.cruce(c._arbol);
-        }
+    }
         
 	public double aptitud() {
-            _aptitud = aptitud(_arbol);
-            return _aptitud;
+            _aptitud = 0;
+            for(int i = 0; i < _casos.get_num_casos(); i++) 
+				_aptitud += Math.pow(aptitud(_arbol, _casos.getCasos()[i].getEntrada()) - _casos.getCasos()[i].getSalida(),2);
+            return -_aptitud;
 	}
-        private double aptitud(Arbol a){
+        private double aptitud(Arbol a, double valor){
             double aux = 0.0;
             if (a.get_valor().equalsIgnoreCase("log"))
-                aux = Math.log(aptitud(a.get_hijo(true))); 
+                aux = Math.log(aptitud(a.get_hijo(true),valor)); 
             if (a.get_valor().equalsIgnoreCase("sqrt"))
-                aux = Math.sqrt(aptitud(a.get_hijo(true)));
+                aux = Math.sqrt(aptitud(a.get_hijo(true),valor));
             if (a.get_valor().equalsIgnoreCase("+"))
-                aux=aptitud(a.get_hijo(true))+aptitud(a.get_hijo(false));
+                aux=aptitud(a.get_hijo(true),valor)+aptitud(a.get_hijo(false),valor);
             if (a.get_valor().equalsIgnoreCase("-"))
-                aux=aptitud(a.get_hijo(true))-aptitud(a.get_hijo(false));
+                aux=aptitud(a.get_hijo(true),valor)-aptitud(a.get_hijo(false),valor);
             if (a.get_valor().equalsIgnoreCase("*"))
-                aux=aptitud(a.get_hijo(true))*aptitud(a.get_hijo(false));
+                aux=aptitud(a.get_hijo(true),valor)*aptitud(a.get_hijo(false),valor);
             if (a.get_valor().equalsIgnoreCase("/"))
-                aux=aptitud(a.get_hijo(true))/aptitud(a.get_hijo(false));
+                aux=aptitud(a.get_hijo(true),valor)/aptitud(a.get_hijo(false),valor);
             if (a.get_valor().equalsIgnoreCase("A"))
-                aux = 5;
+                aux = valor;
             if (a.get_valor().equalsIgnoreCase("B"))
-                aux = 5;
+                aux = valor;
                 
-                
-                
-                return aux;
+            
+            return aux;
             
         }
         

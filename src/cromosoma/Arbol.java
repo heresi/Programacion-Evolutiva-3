@@ -128,7 +128,7 @@ public class Arbol implements Iterable<Arbol>{
                 _hi.aleatorioCompleta(r.nextInt(Math.max(0, a)));
             }
                 
-            else{
+            else if(5-_profundidad > 0){
                 _hd.aleatorioCreciente(r.nextInt(Math.max(0, 5-_profundidad)));
                 _hi.aleatorioCompleta(r.nextInt(Math.max(0, 5-_profundidad)));
             }
@@ -138,7 +138,7 @@ public class Arbol implements Iterable<Arbol>{
 	//genera aleatorio
 	public void aleatorioCompleta(int prof) {
 		Random r = new Random();
-		if (prof == 0) {
+		if (prof <= 0) {
 			_posSimbolo = r.nextInt(Consts._cjtoTerms.length);
 			_valor = Consts._cjtoTerms[_posSimbolo];
 			_numNodos = 1;

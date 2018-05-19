@@ -37,6 +37,7 @@ public class PoblacionRuleta extends Poblacion{
 						encontrado = true;
 					else pos++;
 				}
+				if(!encontrado) pos = _tam-1;
 				pob_aux[i] = FactoriaCromosoma.getCromosomaCopia(_pob[pos]);
 			}
 	    }
@@ -50,6 +51,7 @@ public class PoblacionRuleta extends Poblacion{
 						encontrado = true;
 					else pos++;
 				}
+				if(!encontrado) pos = _tam-1;
 				pob_aux[i] = FactoriaCromosoma.getCromosomaCopia(_pob[pos]);
 			}
 		}
